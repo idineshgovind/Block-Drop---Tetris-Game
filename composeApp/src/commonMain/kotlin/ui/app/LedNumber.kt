@@ -24,6 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import logic.LedFontFamily
 import ui.theme.BrickMatrix
 import ui.theme.BrickSpirit
@@ -43,7 +45,9 @@ fun LedClock(modifier: Modifier = Modifier) {
     var clock by remember { mutableStateOf(0 to 0) }
 
     DisposableEffect(key1 = animateValue.roundToInt()) {
-        val (curHou, curMin) = DateTime.getFormattedDate("2023-09-22T10:18:15.311Z").split(",")
+        val currentMoment: Instant = Clock.System.now()
+        val formattedTimestamp: String = currentMoment.toString()
+        val (curHou, curMin) = DateTime.getFormattedDate(formattedTimestamp).split(",")
         clock = curHou.toInt() to curMin.toInt()
         onDispose { }
     }

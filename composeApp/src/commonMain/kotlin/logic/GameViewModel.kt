@@ -20,7 +20,7 @@ import kotlin.reflect.KClass
 class GameViewModel : ViewModel() {
 
     private val _viewState: MutableState<ViewState> = mutableStateOf(ViewState())
-    val viewState : State<ViewState> = _viewState
+    val viewState: State<ViewState> = _viewState
 
 
     fun dispatch(action: Action) =
@@ -74,6 +74,7 @@ class GameViewModel : ViewModel() {
                     }
 
                     Action.Rotate -> run {
+                        if (state.spirit.shape == SpiritType[4]) return@run state
                         if (!state.isRuning) return@run state
                         val spirit = state.spirit.rotate().adjustOffset(state.matrix)
                         if (spirit.isValidInMatrix(state.bricks, state.matrix)) {
